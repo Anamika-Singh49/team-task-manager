@@ -17,7 +17,7 @@ app.get("/api", (req, res) => {
 });
 
 // React Frontend Route
-app.get("*", function(req, res) {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
 
