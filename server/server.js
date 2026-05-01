@@ -26,8 +26,8 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 //});
 
 // All Other Routes
-app.get("/*", (req, res) => {
-res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
 // MongoDB Connect
