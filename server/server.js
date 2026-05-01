@@ -5,20 +5,26 @@ const path = require("path");
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// React Frontend Files
-app.use(express.static(path.join(__dirname, "../client/build")));
-
-// API Route
+// API Test Route
 app.get("/api", (req, res) => {
   res.send("API Running Successfully");
 });
 
-// React Frontend Route
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "client/build/index.html"));
+// React Frontend Build Folder Serve
+app.use(express.static(path.join(__dirname, "client/build")));
+
+// Home Route
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
+// All Other Routes
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 // MongoDB Connect
@@ -31,6 +37,7 @@ mongoose.connect(process.env.MONGO_URI)
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
+
 })
 .catch((err) => {
   console.log(err);
