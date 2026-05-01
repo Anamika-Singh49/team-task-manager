@@ -1,18 +1,27 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Root Route
-app.get("/", (req, res) => {
+// React Frontend Files
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+// API Route
+app.get("/api", (req, res) => {
   res.send("API Running Successfully");
 });
 
-// MongoDB Connect + Start Server
+// React Frontend Route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
+
+// MongoDB Connect
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log("MongoDB Connected");
@@ -24,5 +33,5 @@ mongoose.connect(process.env.MONGO_URI)
   });
 })
 .catch((err) => {
-  console.log("Mongo Error:", err);
+  console.log(err);
 });
