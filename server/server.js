@@ -18,8 +18,7 @@ app.get("/api", (req, res) => {
 //});
 
 // React Frontend Build Folder Serve
-app.use(express.static(path.resolve(__dirname, "../client/build")));
-
+app.use(express.static(path.join(process.cwd(),"client","build")));
 // Home Route
 //app.get("/", (req, res) => {
  // res.sendFile(path.join(__dirname, "../client/build", "index.html"));
@@ -27,7 +26,7 @@ app.use(express.static(path.resolve(__dirname, "../client/build")));
 
 // All Other Routes
 app.use((req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+ res.sendFile(path.join(process.cwd(),"client","build","index.html"));
 });
 
 // MongoDB Connect
