@@ -13,12 +13,12 @@ app.use(express.json());
 app.get("/api", (req, res) => {
   res.send("API Running Successfully");
 });
-app.get("/", (req, res) => {
-  res.send("Server Running Successfully");
-});
+//app.get("/", (req, res) => {
+ // res.send("Server Running Successfully");
+//});
 
 // React Frontend Build Folder Serve
-//app.use(express.static(path.join(__dirname, "../client/build")));
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 // Home Route
 //app.get("/", (req, res) => {
@@ -26,9 +26,9 @@ app.get("/", (req, res) => {
 //});
 
 // All Other Routes
-//app.get(/.*/, (req, res) => {
- // res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-//});
+app.get("*", (req, res) => {
+res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 // MongoDB Connect
 mongoose.connect(process.env.MONGO_URI)
